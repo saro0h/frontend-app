@@ -33,6 +33,17 @@ class DefaultController extends Controller
         return $this->redirectToRoute('admin');
     }
 
+    /**
+     * @Route("/admin/articles", name="get_articles")
+     */
+    public function getArticlesAction()
+    {
+        $response = $this->get('csa_guzzle.client.my_api')->get($this->getParameter('my_api_url').'/articles');
+        $articles = $this->get('serializer')->deserialize($response->getBody()->getContents(), 'array', 'json');
+
+        return $this->render('default/articles.html.twig', ['articles' => $articles]);
+    }
+
 
     /**
      * @Route("/admin/logout", name="logout")

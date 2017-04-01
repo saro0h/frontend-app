@@ -57,12 +57,13 @@ class GithubAuthenticator implements SimplePreAuthenticatorInterface, Authentica
     public function authenticateToken(TokenInterface $token, UserProviderInterface $userProvider, $providerKey)
     {
         $accessToken = $token->getCredentials();
+
         $user = $userProvider->loadUserByUsername($accessToken);
         return new PreAuthenticatedToken(
             $user,
             $accessToken,
             $providerKey,
-            $user->getRoles()
+            ['ROLE_USER']
         );
     }
 

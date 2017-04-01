@@ -31,7 +31,7 @@ class GithubUserProvider implements UserProviderInterface
         if (!$userData) {
             throw new \LogicException('Did not managed to get your user info from Github.');
         }
-        $user = new User($userData['login'], null);
+        $user = new User($username, null);
 
         return $user;
     }
