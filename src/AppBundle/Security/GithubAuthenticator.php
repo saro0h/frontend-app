@@ -37,9 +37,10 @@ class GithubAuthenticator implements SimplePreAuthenticatorInterface, Authentica
         $url = 'https://github.com/login/oauth/access_token?client_id='.$this->clientId.'&client_secret='.$this->clientSecret.'&code='.$code.'&redirect_uri='.urlencode($redirectUri);
 
 
-        $response = $this->client->post($url, array(''));
+        $response = $this->client->post($url);
 
         $res = $response->getBody()->getContents();
+
         $info = explode('&', $res);
         $res = explode('=', $info[0]);
 

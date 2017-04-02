@@ -38,7 +38,14 @@ class DefaultController extends Controller
      */
     public function getArticlesAction()
     {
-        $response = $this->get('csa_guzzle.client.my_api')->get($this->getParameter('my_api_url').'/articles');
+        $response = $this->get('csa_guzzle.client.my_api')
+            ->get(
+                $this->getParameter('my_api_url').'/articles',
+                [
+                    'headers' => ['Authorization' => 'Bearer '.$this->getUser()->getUsername()]
+                ]
+        );
+
         $articles = $this->get('serializer')->deserialize($response->getBody()->getContents(), 'array', 'json');
 
         return $this->render('default/articles.html.twig', ['articles' => $articles]);
